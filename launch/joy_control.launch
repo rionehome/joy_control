@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find turtlebot_bringup)/launch/minimal.launch"/>
+
+  <node pkg="joy" name="joy_nodel" type="joy_node" output="screen" />
+  <node pkg="joy_control" name="joy_control" type="joy_control.py" output="screen" />
+</launch>
