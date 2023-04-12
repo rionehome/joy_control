@@ -4,6 +4,10 @@ import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
 
+# adjust these values
+LINEAR_SPEED = 0.25
+ANGULAR_SPEED = 1.25
+
 class JoyControl():
     def __init__(self):
         rospy.init_node("joy_control")
@@ -11,23 +15,27 @@ class JoyControl():
         self.joy_sub = rospy.Subscriber("/joy", Joy, self.joy_callback)
     
     def joy_callback(self, msg):
-        x = msg.axes[1] * 0.25
-        z = msg.axes[0] * 1.25
+        # joystick values
+        x = msg.axes[1] * LINEAR_SPEED
+        z = msg.axes[0] * ANGULAR_SPEED
         
+        # override values when direction key is used
         if msg.axes[7] != 0:
-            msg.axes[7] * 0.25
+            x = msg.axes[7] * LINEAR_SPEED
         
         if msg.axes[6] != 0:
-            z = msg.axes[6] * 1.25
+            z = msg.axes[6] * ANGULAR_SPEED
         
+        if x == 0 and z == 0:
+            return
+
         twist = Twist()
         twist.linear.x = x
         twist.angular.z = z
         
         rospy.loginfo("Publishing x: {} z: {}".format(x, z))
+        self.velocity_pub.publish(twist)
         
-        if x != 0 or z != 0:
-            self.velocity_pub.publish(twist)
 
 if __name__ == '__main__':
     try:
