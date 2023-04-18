@@ -1,3 +1,3 @@
 # joy_control
 
-Control turtlebot 2 with Bluetooth gamepad!
+Control Turtlebot 2 with gamepad!
