@@ -5,8 +5,8 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
 
 # adjust these values
-LINEAR_SPEED = 0.15
-ANGULAR_SPEED = 1.25
+LINEAR_SPEED = 0.3
+ANGULAR_SPEED = 1.5
 
 class JoyControl():
     def __init__(self):
